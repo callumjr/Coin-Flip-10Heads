@@ -1,5 +1,6 @@
 let heads = 0;
 let coinFlips = 0;
+let tenHeadscount = [];
 const flipLimit = 100000;
 
 const flipCoin = () => {
@@ -12,10 +13,26 @@ const flipCoin = () => {
   return result;
 };
 
-while (heads < 11 && coinFlips < flipLimit) {
-  flipCoin();
-}
+const flipTenHeads = () => {
+  while (tenHeadscount.length < 10000) {
+    while (heads < 11 && coinFlips < flipLimit) {
+      flipCoin();
+    }
 
-console.log(coinFlips);
+    tenHeadscount.push(coinFlips);
+    heads = 0;
+    coinFlips = 0;
+  }
 
-// 0.5^100
+  return tenHeadscount;
+};
+
+const mean = (numbers) => {
+  const sum = numbers.reduce((acc, curr) => {
+    return acc + curr;
+  }, 0);
+
+  return sum / 10000;
+};
+
+console.log(mean(flipTenHeads()));
